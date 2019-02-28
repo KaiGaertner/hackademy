@@ -1,0 +1,105 @@
+sounds/hello.wav: No such file or directory
+Take picture
+Traceback (most recent call last):
+  File "/home/pi/control.py", line 18, in <module>
+    blinzler.take_picture()
+  File "/home/pi/blinzel.py", line 49, in take_picture
+    camera.capture(name)
+  File "/usr/lib/python2.7/dist-packages/picamera/camera.py", line 1570, in capture
+    encoder.start(output)
+  File "/usr/lib/python2.7/dist-packages/picamera/encoders.py", line 1543, in start
+    super(PiCookedOneImageEncoder, self).start(output)
+  File "/usr/lib/python2.7/dist-packages/picamera/encoders.py", line 819, in start
+    self._open_output(output)
+  File "/usr/lib/python2.7/dist-packages/picamera/encoders.py", line 774, in _open_output
+    output = io.open(output, 'wb', buffering=65536)
+IOError: [Errno 2] No such file or directory: 'pics/2016-06-17_12:41:55.881989.png'
+sounds/hello.wav: No such file or directory
+Tesseract Open Source OCR Engine v3.05.00dev with Leptonica
+tesseract: symbol lookup error: tesseract: undefined symbol: _ZN9tesseract16TessTextRendererC1Ev
+Take picture
+[take_picture] Taking picture lasts 5.33458709717 seconds
+Rotate picture!
+Start OCR!
+TESSERACT OCR finished!
+[make_ocr] Process OCR lasts 10.0530939102 seconds
+Traceback (most recent call last):
+  File "/home/pi/control.py", line 20, in <module>
+    blinzler.read_ocr()
+  File "/home/pi/blinzel.py", line 98, in read_ocr
+    f = open(textfile, 'r')
+IOError: [Errno 2] No such file or directory: '/home/pi/texts/2016-06-17_12:44:06.899759.txt'
+Playing WAVE 'sounds/hello.wav' : Signed 16 bit Little Endian, Rate 16000 Hz, Mono
+Tesseract Open Source OCR Engine v3.05.00dev with Leptonica
+tesseract: symbol lookup error: tesseract: undefined symbol: _ZN9tesseract16TessTextRendererC1Ev
+Take picture
+[take_picture] Taking picture lasts 5.89711904526 seconds
+Rotate picture!
+Start OCR!
+TESSERACT OCR finished!
+[make_ocr] Process OCR lasts 3.04490613937 seconds
+Traceback (most recent call last):
+  File "/home/pi/control.py", line 20, in <module>
+    blinzler.read_ocr()
+  File "/home/pi/blinzel.py", line 98, in read_ocr
+    f = open(textfile, 'r')
+IOError: [Errno 2] No such file or directory: 'texts/2016-06-17_12:48:05.072644.txt'
+Playing WAVE 'sounds/hello.wav' : Signed 16 bit Little Endian, Rate 16000 Hz, Mono
+Tesseract Open Source OCR Engine v3.05.00dev with Leptonica
+tesseract: symbol lookup error: tesseract: undefined symbol: _ZN9tesseract16TessTextRendererC1Ev
+Take picture
+[take_picture] Taking picture lasts 7.25982499123 seconds
+Rotate picture!
+Start OCR!
+TESSERACT OCR finished!
+[make_ocr] Process OCR lasts 3.55555105209 seconds
+Traceback (most recent call last):
+  File "/home/pi/control.py", line 20, in <module>
+    blinzler.read_ocr()
+  File "/home/pi/blinzel.py", line 98, in read_ocr
+    f = open(textfile, 'r')
+IOError: [Errno 2] No such file or directory: 'texts/2016-06-17_12:49:49.445847.txt'
+Playing WAVE 'sounds/hello.wav' : Signed 16 bit Little Endian, Rate 16000 Hz, Mono
+mmal: mmal_vc_component_enable: failed to enable component: ENOSPC
+Traceback (most recent call last):
+  File "/home/pi/control.py", line 18, in <module>
+    blinzler.take_picture()
+  File "/home/pi/blinzel.py", line 33, in take_picture
+    with picamera.PiCamera() as camera:
+  File "/usr/lib/python2.7/dist-packages/picamera/camera.py", line 488, in __init__
+    self.STEREO_MODES[stereo_mode], stereo_decimate)
+  File "/usr/lib/python2.7/dist-packages/picamera/camera.py", line 620, in _init_camera
+    prefix="Camera component couldn't be enabled")
+  File "/usr/lib/python2.7/dist-packages/picamera/exc.py", line 191, in mmal_check
+    raise PiCameraMMALError(status, prefix)
+picamera.exc.PiCameraMMALError: Camera component couldn't be enabled: Out of resources (other than memory)
+Playing WAVE 'sounds/hello.wav' : Signed 16 bit Little Endian, Rate 16000 Hz, Mono
+Tesseract Open Source OCR Engine v3.05.00dev with Leptonica
+tesseract: symbol lookup error: tesseract: undefined symbol: _ZN9tesseract16TessTextRendererC1Ev
+Take picture
+[take_picture] Taking picture lasts 8.10354304314 seconds
+Rotate picture!
+Start OCR!
+TESSERACT OCR finished!
+[make_ocr] Process OCR lasts 3.24495601654 seconds
+Traceback (most recent call last):
+  File "/home/pi/control.py", line 20, in <module>
+    blinzler.read_ocr()
+  File "/home/pi/blinzel.py", line 98, in read_ocr
+    f = open(textfile, 'r')
+IOError: [Errno 2] No such file or directory: 'texts/2016-06-17_13:17:32.710889.txt'
+Playing WAVE 'sounds/hello.wav' : Signed 16 bit Little Endian, Rate 16000 Hz, Mono
+Tesseract Open Source OCR Engine v3.05.00dev with Leptonica
+tesseract: symbol lookup error: tesseract: undefined symbol: _ZN9tesseract16TessTextRendererC1Ev
+Take picture
+[take_picture] Taking picture lasts 7.82884287834 seconds
+Rotate picture!
+Start OCR!
+TESSERACT OCR finished!
+[make_ocr] Process OCR lasts 3.21008896828 seconds
+Traceback (most recent call last):
+  File "/home/pi/control.py", line 20, in <module>
+    blinzler.read_ocr()
+  File "/home/pi/blinzel.py", line 98, in read_ocr
+    f = open(textfile, 'r')
+IOError: [Errno 2] No such file or directory: 'texts/2016-06-17_13:20:19.772841.txt'
