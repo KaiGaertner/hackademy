@@ -128,8 +128,8 @@ def ProcessWaveMedia(sB,sTMP1,sIMG1,sOUT1,sAUDIBLE,sVISIBLE):
       print 'Saved to: '+sTMP1
     else:
       os.remove(sTMP1)
-  except OSError, e:
-    print ('Could not remove "'+sTMP1+'"')
+  except(OSError, e):
+    print('Could not remove "'+sTMP1+'"')
 
 def Wav2Media(sB,sTMP1,sIMG1,sOUT1,sAUDIBLE,sVISIBLE):
   '''

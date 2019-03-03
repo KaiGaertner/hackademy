@@ -34,7 +34,7 @@ class Blinzler:
 			name = "pics/"+str(datetime.now()).replace(' ','_')+'.png'
 		self.last_picture = name
 		with picamera.PiCamera() as camera:
-			print "Take picture"
+			print("Take picture")
 			camera.resolution = (2592, 1944)
 			#camera.resolution = (1280, 960)
 			camera.quality=100
@@ -53,9 +53,9 @@ class Blinzler:
 			# turn of the lights
 			#self.light_off()
 			if self.DEBUG:
-				print "[take_picture] Taking picture lasts "+str(time.time() - start_time)+" seconds"
+				print("[take_picture] Taking picture lasts "+str(time.time() - start_time)+" seconds")
 			# rotate picture for processing
-			print "Rotate picture!"
+			print("Rotate picture!")
 			im = Image.open(name)
 			im.filter(ImageFilter.SHARPEN)
 			im.rotate(-90).save(name)
@@ -68,7 +68,7 @@ class Blinzler:
 	def make_ocr(self, picture=None):
 		if self.DEBUG:
 			start_time = time.time()
-		print "Start OCR!"
+		print("Start OCR!")
 		if not picture:
 			picture = self.last_picture
 		textfile = picture.replace(".png",".txt").replace('pics/', 'texts/')
@@ -76,7 +76,7 @@ class Blinzler:
 		self.picture_text.append([picture, textfile])
 		if self.OCR_SYSTEM == "TESSERACT":
 			subprocess.call(['tesseract', picture, textfile.replace(".txt",""), '-l', 'deu'], shell=False)
-			print "TESSERACT OCR finished!"
+			print("TESSERACT OCR finished!")
 		if self.OCR_SYSTEM == "OCRAD":
 			#subprocess.call(['tesseract', picture, textfile.replace(".txt",""), '-l', 'deu'], shell=False)
 			# pngtopnm test.png | ocrad -c iso-8859-15 > test_ocrad.txt && \
@@ -87,11 +87,10 @@ class Blinzler:
 			#p1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
 			#output = p2.communicate()[0]
 			#subprocess.Popen(['iconv', '-f ISO-8859-15', textfile, '-t UTF-8', '-o '+textfile])
-			os.system('pngtopnm '+picture+' | ocrad -c iso-8859-15 > '+textfile
-						+' && iconv -f ISO-8859-15 '+textfile+' -t UTF-8 -o '+textfile)
-			print "OCRAD OCR finished!"
+			os.system('pngtopnm '+picture+' | ocrad -c iso-8859-15 > '+textfile	+' && iconv -f ISO-8859-15 '+textfile+' -t UTF-8 -o '+textfile)
+			print("OCRAD OCR finished!")
 		if self.DEBUG:
-				print "[make_ocr] Process OCR lasts "+str(time.time() - start_time)+" seconds"
+				print("[make_ocr] Process OCR lasts "+str(time.time() - start_time)+" seconds")
 		return textfile
 		
 	
@@ -101,7 +100,7 @@ class Blinzler:
 			textfile = self.last_textfile
 		f = open(textfile, 'r')
 		self.last_text = f.read()
-		#print self.last_text
+		#print(self.last_text)
 	
 	def split_ocr(self, textfile=False):
 		self.read_ocr(textfile)
@@ -112,7 +111,7 @@ class Blinzler:
 	def read_word(self):
 		# reads text by words (formerly used for threaded solution
 		index = self.current_index
-		print self.last_text_array[index]
+		print(self.last_text_array[index])
 		subprocess.call(['espeak', '-vde', self.last_text_array[index]], shell=False)
 		if index < len(self.last_text_array)-1:
 			self.current_index = index+1
@@ -130,13 +129,13 @@ class Blinzler:
 			self.SPEAK_PROCESS = subprocess.Popen(['espeak', '-vde', self.last_text, '-f stdout |aplay'])
 			# mbrola-voices mit -vmb-de* und '-s 100' fuer Geschwindigkeit
 			#self.SPEAK_PROCESS = subprocess.Popen(['espeak', '-vmb-de4', '-s 150' ,self.last_text])
-			print "eSPEAK-Process pid: "+ str(self.SPEAK_PROCESS.pid)
+			print("eSPEAK-Process pid: "+ str(self.SPEAK_PROCESS.pid))
 			sys.stdout.flush()
 			return self.SPEAK_PROCESS.pid
 		if self.TTS_SYSTEM == "PICOTTS":
 			self.read_ocr()
 			soundfile = self.last_textfile.replace('.txt','.wav').replace('texts/','sounds/') 
-			print '[speak_text] '+ soundfile
+			print('[speak_text] '+ soundfile)
 			#subprocess.Popen(['pico2wave', '--lang=de-DE', '--wave=sounds/'+self.last_textfile.replace('.txt','.wav'),text], shell=False)
 			#os.system('sh read_pico.sh "$(cat texts/'+self.last_textfile+')"')
 			subprocess.call(['pico2wave', '-l=de-DE', '-w='+soundfile, self.last_text])
@@ -144,7 +143,7 @@ class Blinzler:
 			#subprocess.call(['aplay', 'sounds/stopped_reading.wav'])
 			self.play_audio(soundfile)
 			self.play_audio('sounds/stopped_reading.wav')
-			print "Finished Reading"
+			print("Finished Reading")
 			
 		
 	def stop_reading(self):
@@ -170,7 +169,7 @@ class Blinzler:
 			else: 
 				return self.SPEAK_PROCESS.returncode
 		except:
-			print "Fehler!"
+			print("Fehler!")
 
 	def play_audio(self,file):
 		CHUNK = 1024
