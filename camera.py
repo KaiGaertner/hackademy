@@ -16,15 +16,14 @@ ap.add_argument("-n", "--name", default=None,
 args = vars(ap.parse_args())
 
 
-
 def take_picture(speed=150000, name = None, contrast=60, brightness=40):
     """Takes a picture and saves it in the specified path"""       
     if name == None:
         now = datetime.datetime.now()
-        name = "/home/pi/scanned_images/{}-{}-{}um{}:{}:{}.png".format(now.year, now.month, now.day,
+        name = "/home/pi/hackdemyk/scanned_images/{}-{}-{}um{}:{}:{}.png".format(now.year, now.month, now.day,
                  	                                              now.hour, now.minute, now.second)
     else:
-        name = "/home/pi/{}".format(args['name']+'.png')
+        name = "/home/pi/hackdemyk/scanned_images/{}".format(args['name']+'.png')
     with picamera.PiCamera() as camera:
         print("Take picture")
         camera.resolution = (2592, 1944)
@@ -46,23 +45,24 @@ def take_picture(speed=150000, name = None, contrast=60, brightness=40):
         print("[take_picture] Taking picture lasts "+str(time.time() - start_time)+" seconds")
         # rotate picture for processing
         im = Image.open(name)
+        im.filter(ImageFilter.SHARPEN)
+        im.rotate(-90).save(name)
+        im.close()
         #NOTE: Applying Perspective Transform
-        if args['scan'] == True:
-            pass
+        if bool(args['scan']) == True:
+            os.system("python3 scan.py -i {} -o {}".format(name,'scanned.png'))
         #NOTE: Applying some preprocess to improve performance
         # [When the case if ready, and the conditions are fixed. Only then this makes sense]
         if args['preprocess'] == True:
             pass
 
-        im.filter(ImageFilter.SHARPEN)
-        im.rotate(-90).save(name)
-        im.close()
 
 
 
 start_time = time.time()
 var = args['name']
 take_picture(name = var)
+# should return 2 images one normal the other scanned
 
 
 

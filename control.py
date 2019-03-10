@@ -24,15 +24,15 @@ if bool(args['scan']) == True:
     count = 0
     while True:
         if GPIO.input(12) == False:
-            # Execute Code
-            os.system('python3 camera.py -n hackdemyk/scanned_images/DEBUG{}'.format(count))
+            # Execute Code - s True
+            os.system('python3 camera.py -n DEBUG{}'.format(count))
             count+=1
             time.sleep(2)
             print("Ready to take  another picture")
             print("Or Press Button@Pin11 to Extract Text")
         if GPIO.input(11) == False:
             print('Initiating Text Extraction')
-            mode='online'
+            mode='offline'
             os.system("python3 images_to_text.py -f scanned_images -m {} -o results".format(mode))
             break
 print('Completed')
