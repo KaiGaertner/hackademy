@@ -46,7 +46,7 @@ def take_picture(speed=150000, name = None, contrast=60, brightness=40):
         # rotate picture for processing
         im = Image.open(name)
         im.filter(ImageFilter.SHARPEN)
-        im.rotate(-90).save(name)
+        im.rotate(270).save(name)
         im.close()
         #NOTE: Applying Perspective Transform
         if bool(args['scan']) == True:

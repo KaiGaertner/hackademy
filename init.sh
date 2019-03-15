@@ -1,3 +1,1 @@
-#!/bin/bash
-# How to initialize controls. buttons
-python3 control.py -s True 
+python3 control1.py -s True

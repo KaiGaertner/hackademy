@@ -19,7 +19,7 @@ args = vars(ap.parse_args())
 sh.cd('/home/pi/hackdemyk/{}'.format(args['folder']))
 # creating a list of images to be processed
 # ! assumes files are stored in order. Reversing the order to read from first to end
-scanned_images = sh.ls().split()[::-1]
+scanned_images = sh.ls('-tr').split()
 
 
 # Initializing text file

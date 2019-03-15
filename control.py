@@ -21,7 +21,7 @@ def create_play(text, speed=0.93, language='de-DE'):
        speed: changes rate of sound [0-1]
        language: choose language see aplay -h'''
 
-    os.system('''pico2wave -l de-DE -w /home/pi/hackdemyk/audio/temp.wav "{}"'''.format(text))
+    os.system('''pico2wave -l {} -w /home/pi/hackdemyk/audio/temp.wav "{}"'''.format(language,text))
     sound = wave.open("/home/pi/hackdemyk/audio/temp.wav")
     p = pyaudio.PyAudio()
     chunk = 1024
@@ -38,9 +38,9 @@ def create_play(text, speed=0.93, language='de-DE'):
         if data == b'':
             break
 
-# Initializing raspberrypi 3b + pins.
-
-create_play(text='Das System is bereit. Drucken Sie auf den linken Knopf um Bilder aufzunehmen. Wenn sie fertig sind, drucken sie auf den rechten Knopf um die Textverarbeitung zu starten')
+#  Initializing raspberrypi 3b + pins.
+#create_play(text='Das System is bereit. Drucken Sie auf den linken Knopf um Bilder aufzunehmen. Wenn sie fertig sind, drucken sie auf den rechten Knopf um die Textverarbeitung zu starten')
+create_play(text='Das System is bereit')
 if bool(args['scan']) == True:
     # RPi.GPIO Layout verwenden (wie Pin-Nummern)
     GPIO.setmode(GPIO.BOARD)
@@ -59,8 +59,15 @@ if bool(args['scan']) == True:
             print("Or Press Button@Pin11 to Extract Text")
         if GPIO.input(11) == False:
             print('Initiating Text Extraction')
-            mode='offline'
+            mode='online'
             create_play(text='Verarbeitung gestartet')
             os.system("python3 images_to_text.py -f scanned_images -m {} -o results".format(mode))
             break
 print('Completed')
+
+
+extracted_text = open("/home/pi/hackdemyk/text_results/results.txt","r") 
+to_read=extracted_text.read()
+extracted_text.close()
+
+create_play(text = to_read, language='de-DE')
