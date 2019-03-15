@@ -59,6 +59,7 @@ if bool(args['scan']) == True:
     read = True
     count = 0
     while True:
+        time.sleep(0.3) # workaround - will be replaced by a proper game loop
         if GPIO.input(13) == False and GPIO.input(11) == False:
             sys.exit()
         if state == 'home':
