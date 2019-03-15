@@ -2,7 +2,7 @@
 import argparse
 import time, os, subprocess
 import RPi.GPIO as GPIO
-import wave, sys, pyaudio 
+import wave, sys, pyaudio
 import sh
 
 # Controls how to configure the script:
@@ -23,7 +23,7 @@ mode='online'
 
 # Main Audio Function:
 def create_play(text, speed=0.93, language='de-DE'):
-    '''transforms given text into a temporary wav file and plays it. 
+    '''transforms given text into a temporary wav file and plays it.
        text: words to be spoken
        speed: changes rate of sound [0-1]
        language: choose language see aplay -h'''
@@ -55,14 +55,14 @@ if bool(args['scan']) == True:
     GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Takes picture | navigates in memory | goes back a sentence (reading)
     GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Extract text  | navitates in memory | skips a sentence
     GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Go to memory  | select text to read | stops(?)
-    create_play(text='Das System ist bereit. Drucken Sie auf den linken Knopf um Bilder aufzunehmen oder auf den rechten Knopf um Textverarbeitung zu starten.')
+    create_play(text='Das System ist bereit. Drücken Sie auf den linken Knopf um Bilder aufzunehmen oder auf den rechten Knopf um Textverarbeitung zu starten.')
     read = True
     count = 0
     while True:
         if GPIO.input(13) == False and GPIO.input(11) == False:
             sys.exit()
         if state == 'home':
-        # where user takes the pictures with button 13. 
+        # where user takes the pictures with button 13.
         # pressing button 11 initializes text extraction.
             if GPIO.input(13) == False:
                 create_play(text='Bild wird aufgenommen')
@@ -70,7 +70,7 @@ if bool(args['scan']) == True:
                 count+=1
                 time.sleep(2)
                 print("Press Button@13 to take a picture")
-                create_play(speed=0.93, text='Drucken Sie erneut den gleichen Knopf um ein neues Bild aufzunehmen. Oder drucken Sie den rechten Knopf um Verarbeitung zu starten')
+                create_play(speed=0.93, text='Drücken Sie erneut den linken Knopf um ein weiteres Bild aufzunehmen. Oder drücken Sie den rechten Knopf um die Verarbeitung zu starten')
                 print("Or Press Button@Pin11 to Extract Text")
             if GPIO.input(11) == False:
                 time.sleep(0.2)
@@ -79,7 +79,8 @@ if bool(args['scan']) == True:
                 os.system("python3 images_to_text.py -f scanned_images -m {} -o results".format(mode))
                 state='init_memory'
             if GPIO.input(15) == False:
-                create_play('Knopf in der Mitte gedrueckt. Zum Speicher')
+                # create_play('Knopf in der Mitte gedrückt. Zum Speicher')
+                create_play('Zum Speicher')
                 state='init_memory'
         elif state =='init_memory':
             # required to initialize memory
@@ -88,8 +89,8 @@ if bool(args['scan']) == True:
             number_of_texts = len(texts)
             current_text = 0
             create_play(text='Text wurde extrahiert und als {} gespeichert'.format(texts[current_text]))
-            create_play(speed=1, text='''Sie sind jetzt im Speicher. Mit der rechten und linken Knoepfe koennen durch ihre gespeicherten Dokumente navigieren. 
-                Wahlen Sie dann einen Text mit dem Knopf in der Mitte um es abzuspielen''')
+            create_play(speed=1, text='''Sie sind jetzt im Speicher. Mit den rechten und linken Knöpfen können durch ihre gespeicherten Dokumente navigieren.
+                Wählen Sie dann einen Text mit dem Knopf in der Mitte um ihn anzuhören''')
             state='memory'
         elif state =='memory':
             # Controls to navigate in the memory: where all extracted texts are located.
@@ -111,7 +112,7 @@ if bool(args['scan']) == True:
                 break
 
 create_play(text=chosen_text_file + 'wird abgespielt.')
-create_play('Drucken Sie auf den rechten Knopf um vorwarts zu scrollen oder auf den linken Knopf um ruckwaerts zu gehen.')
+create_play('Drücken Sie auf den rechten Knopf um vorwärts zu springen oder auf den linken Knopf um ruckwärts zu gehen.')
 
 print(chosen_text_file)
 # Reading results.txt into a string
