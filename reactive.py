@@ -54,22 +54,23 @@ def create_play(text, speed=0.93, language='de-DE'):
 
 def take_picture(speed=150000, name=None, contrast=60, brightness=40):
     # A picture is being shot and saved. Path is returned
+    path = HOME_DIR + PICS_DIR
     if name is None:
         now = datetime.datetime.now()
-        name = "{}{}{}-{}-{}um{}:{}:{}.png".format(HOME_DIR, PICS_DIR, now.year, now.month, now.day,now.hour, now.minute, now.second)
+        path += "{}-{}-{}um{}:{}:{}.png".format(now.year, now.month, now.day,now.hour, now.minute, now.second)
     else:
-        name = "{}{}{}".format(HOME_DIR, PICS_DIR, name + '.png')
+        path += name + '.png'
     with picamera.PiCamera() as camera:
         print("Take picture")
         camera.resolution = (2592, 1944)
         now = datetime.datetime.now()
         camera.exif_tags['IFD0.Copyright'] = 'Copyright (c) {} by Kai Gaertner'.format(now.year)
-        camera.capture(name)
+        camera.capture(path)
         # rotate picture for processing
-        im = Image.open(name)
-        im.filter(ImageFilter.SHARPEN).rotate(270).save(name)
+        im = Image.open(path)
+        im.filter(ImageFilter.SHARPEN).rotate(270).save(path)
         im.close()
-        return name
+        return path
 
 
 pictures = []
