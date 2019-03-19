@@ -1,1 +1,1 @@
-python3 control1.py -s True
+python3 reactive.py
