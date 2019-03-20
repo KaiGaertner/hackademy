@@ -7,8 +7,8 @@ import pyaudio
 import cv2
 import datetime
 import picamera
-# import pytesseract
-import subprocess
+import pytesseract
+# import subprocess
 from PIL import Image, ImageFilter
 
 RIGHT = 11
@@ -68,7 +68,9 @@ def take_picture(speed=150000, name=None, contrast=60, brightness=40):
         camera.capture(path)
         # rotate picture for processing
         im = Image.open(path)
-        im.filter(ImageFilter.SHARPEN).rotate(270).save(path)
+        sharpened_image = im.filter(ImageFilter.SHARPEN)
+        rotated_image = sharpened_image.rotate(angle=270, expand=True)
+        rotated_image.save(path)
         im.close()
         return path
 
@@ -88,11 +90,10 @@ while running:
         for picture_path in pictures:
             image = cv2.imread(picture_path)
             start_time = time.time()
-            # text = pytesseract.image_to_string(image=image)
-            # text = pytesseract.image_to_string(Image.open(picture_path), lang='deu')
-            subprocess.call(['tesseract', picture_path, picture_path.replace(".png",""), '-l', 'deu'], shell=False)
+            text = pytesseract.image_to_string(Image.open(picture_path), lang='deu')
+            # subprocess.call(['tesseract', picture_path, picture_path.replace(".png",""), '-l', 'deu'], shell=False)
             time_span = time.time() - start_time
-            # print(text)
+            print(text)
             print(time_span)
         print("pressed middle button")
     if GPIO.event_detected(RIGHT):
