@@ -4,7 +4,7 @@ import time
 import os
 import wave
 import pyaudio
-import cv2
+# import cv2
 import datetime
 import picamera
 import pytesseract
@@ -88,13 +88,15 @@ while running:
         create_play(text='Bitte warten. Die Seiten werden verarbeitet')
         print('Initiating Text extraction')
         for picture_path in pictures:
-            image = cv2.imread(picture_path)
+            # image = cv2.imread(picture_path)
+            image = Image.open(picture_path)
             start_time = time.time()
             text = pytesseract.image_to_string(Image.open(picture_path), lang='deu')
             # subprocess.call(['tesseract', picture_path, picture_path.replace(".png",""), '-l', 'deu'], shell=False)
             time_span = time.time() - start_time
             print(text)
             print(time_span)
+            pictures = []
         print("pressed middle button")
     if GPIO.event_detected(RIGHT):
         print("pressed right button")
