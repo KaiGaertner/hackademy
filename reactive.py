@@ -68,8 +68,8 @@ def take_picture(speed=150000, name=None, contrast=60, brightness=40):
         camera.capture(path)
         # rotate picture for processing
         im = Image.open(path)
-        sharpened_image = im.filter(ImageFilter.SHARPEN)
-        rotated_image = sharpened_image.rotate(angle=270, expand=True)
+        # sharpened_image = im.filter(ImageFilter.SHARPEN)
+        rotated_image = im.rotate(angle=270, expand=True)
         rotated_image.save(path)
         im.close()
         return path
