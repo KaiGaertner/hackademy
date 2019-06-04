@@ -1,0 +1,28 @@
+Konzept zur Bauanleitung
+Englisch!
+
+1. Kurze Problembeschreibung: (Nahezu)Blinde Menschen müssen/wollen (Behörden)Briefe lesen können ohne auf fremde Hilfe angewiesen zu sein.
+2. Materialien
+  1. Was mus 'gekauft' werden (Liste mit Links zu den Shops (Reichelt etc.) inklusive affiliate Link)
+    1. Raspberry Pi
+    2. Camera
+    3. Licht
+    4. Cardboard (HDF)
+    5. Knöpfe/Schalter
+    6. Zubehör (Kabel, Board, etc.)
+  2. Was für Werkzeug wird benötigt (und wo bekommt man das?)
+    1. Link zu den Werkstätten
+3. Setup Raspi
+  1. Image installieren (externer Link)
+  2. Monitor und Tastatur anschließen (SSH ist deaktiviert)
+  3. Setup-File ausführen
+  4. Kamera anschließen -> Anleitung für das Kameraflachbandkabel
+  5. Kamera testen (kleines script? für automatisches Testen?)
+4. Gehäuseteile herstellen
+  1. Digitale Schablonen
+  2. Prozess mit dem Cutter erklären? (Vielleicht Links zu offenen Werkstätten wo einem geholfen wird)
+5. Bauanleitung
+  1. Gehäuse zusammenstecken
+  2. Halterung für Raspi anbauen
+  3. Schalter bauen und verbinden
+  4. Anleitung für das Kameraflachbandkabel
