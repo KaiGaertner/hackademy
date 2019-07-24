@@ -9,6 +9,9 @@ pip3 install pillow picamera RPi.GPIO pyaudio pytesseract pyttsx3 py-picotts
 # pico2wave install
 sudo apt-get install --assume-yes libttspico-utils
 
+# install for testing purpose
+#sudo apt-get install feh imagemagick
+
 # install raspiaudio head
 sudo wget -O mic mic.raspiaudio.com
 sudo bash mic -y
