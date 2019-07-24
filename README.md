@@ -4,7 +4,9 @@ Bei diesem Projekt handelt es sich um ein DIY-Projekt als Hilfmittel für Mensch
 
 ## Installation manual
 ### Download Buster image and copy to microSD-Card
-> sudo dd bs=4M if=2019-07-10-raspbian-buster-lite.img of=/dev/XXX conv=fsync
+You can download the latest image for the *raspberry* here: https://www.raspberrypi.org/downloads/raspbian/
+
+> $ sudo dd bs=4M if=2019-07-10-raspbian-buster-lite.img of=/dev/XXX conv=fsync
 
 Replace XXX with the path to your device (could be different depending on your operation system.
 
@@ -61,12 +63,31 @@ Last step, you have to install git to get everything necessary vor the vorleser-
 ### Install the Vorleser-System
 At first you have to checkout the repository (usually the home folder of the *pi* user would be a good place */home/pi/*):
 
-> git clone https://github.com/KaiGaertner/hackademy.git
+> $ git clone https://github.com/KaiGaertner/hackademy.git
 
 Now move to the new directory *hakcademy*:
 
-> cd hackademy
+> $ cd hackademy
 
 Now you have to run the install script with root privileges:
 
-> sudo sh install.sh
+> $ sudo sh install.sh
+
+#### [optional] Expanding the available sources
+It could happen, that the script *install.sh* can not finish, because some packages couldn't be found. What I had experienced was, that some packages haven't been available for Raspberry Buster yet, but already are for the standard Debian Buster. Therefor the sources must have to been added. Open the */etc/apt/sources.list* file with root privilege:
+
+> $ sudo nano /etc/apt/sources.list
+
+Add the following lines or some other mirror for Debian Buster:
+
+> deb http://ftp.de.debian.org/debian/ buster main contrib non-free
+
+After saving and closing, you will have to get the keys for this repository, before you can use them. If you run:
+
+> $ sudo apt-get update
+
+You will see the keys you have to import and if they haven't changed you can use the following command to import and accept them:
+
+> $ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 04EE7237B7D453EC 648ACFD622F3D138 EF0F382A1A7B6500 DCC9EFBF77E11517
+
+The last part of the *install.sh* script installs the software for the *audio hat* (https://www.raspiaudio.com) and will ask you to reboot the system. 
