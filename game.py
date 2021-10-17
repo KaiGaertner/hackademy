@@ -1,5 +1,5 @@
-import os, datetime						# import os library
-import RPi.GPIO as GPIO				# import RPi.GPIO module
+import os, datetime                        # import os library
+import RPi.GPIO as GPIO                # import RPi.GPIO module
 import pygame
 
 # folders definition
@@ -37,23 +37,23 @@ GPIO.add_event_detect(MIDDLE, GPIO.FALLING, callback=lambda x: on_middle_button_
 GPIO.add_event_detect(RIGHT, GPIO.FALLING, callback=lambda x: on_right_button_pressed(), bouncetime=300)
 
 def tts_create(ID,text=''):
-	sounds = []
-	# split text into chunks and create sound files
-	block_list = text.split("\n\n")
-	for idx, block in enumerate(block_list):
-		current_block = block.trim()
-		if len(current_block) > 5: # current_block contains words
-			os.system('''pico2wave -l de-DE -w {}{}_{}.wav "{}"'''.format(sounds_path, ID, f'{idx:03d}', current_block))
+    sounds = []
+    # split text into chunks and create sound files
+    block_list = text.split("\n\n")
+    for idx, block in enumerate(block_list):
+        current_block = block.trim()
+        if len(current_block) > 5: # current_block contains words
+            os.system('''pico2wave -l de-DE -w {}{}_{}.wav "{}"'''.format(sounds_path, ID, f'{idx:03d}', current_block))
             soundfile = sounds_path+ID+'_'+f'{idx:03d}'+'.wav'
             try: # check soundfile and add if not error prone
-				pygame.mixer.music.load(soundfile)
+                pygame.mixer.music.load(soundfile)
                 sounds.append(soundfile)
                 pygame.mixer.music.unload()
                 print("["+f'{idx:03d}'+".wav] " + current_block) # for debugging purposes
                 print('---') # for debugging purposes
-			except pygame.error:
-				continue
-	return sounds
+            except pygame.error:
+                continue
+    return sounds
 
 
 clock = pygame.time.Clock()
@@ -70,30 +70,30 @@ def on_middle_button_pressed():
         pygame.event.post(pygame.event.Event(START_READING))
 
 def on_left_button_pressed():
-	if(pygame.mixer.music.get_busy()):
+    if(pygame.mixer.music.get_busy()):
         pygame.event.post(pygame.event.Event(PREVIOUS_TRACK))
 
 def take_picture(ID='test'):
-	from picamera import PiCamera
-	if DARKMODE:
-		lightswitch(True)
-	camera = PiCamera()
-	camera.capture(pics_path+ID+".png")
-	if DARKMODE:
-			lightswitch(False)
-	camera.close()
-	print("Taken picture.")
+    from picamera import PiCamera
+    if DARKMODE:
+        lightswitch(True)
+    camera = PiCamera()
+    camera.capture(pics_path+ID+".png")
+    if DARKMODE:
+            lightswitch(False)
+    camera.close()
+    print("Taken picture.")
 
 def start_reading():
     ID = datetime.datetime.now().strftime("%Y%m%d_%H-%M-%S")
 
-	take_picture(ID)
+    take_picture(ID)
 
-	text = ocr_scan(ID)
-	write_textfile(ID, text) # for debugging purposes
+    text = ocr_scan(ID)
+    write_textfile(ID, text) # for debugging purposes
 
-	sound_files = tts_create(ID,text)
-	print(sound_files) # for debugging purposes
+    sound_files = tts_create(ID,text)
+    print(sound_files) # for debugging purposes
 
     pygame.event.post(pygame.event.Event(OCR_DONE, list=sound_files))
 
@@ -107,13 +107,15 @@ while True:
             start_reading()
             break
         if event.type == OCR_DONE:
-            global sound_files = event.list
-            global current_sound_file_index = 0
+            global sound_files
+            sound_files = event.list
+            global current_sound_file_index
+            current_sound_file_index = 0
             pygame.event.post(pygame.event.Event(START_PLAYING))
             break
         if event.type == START_PLAYING:
             if(current_sound_file_index >= len(sound_files)):
-                pygame.event.post(pygame.event.Event(END_OF_QUEUE_REACHED)))
+                pygame.event.post(pygame.event.Event(END_OF_QUEUE_REACHED))
                 break
             pygame.mixer.music.load(sound_files[current_sound_file_index])
             pygame.mixer.music.play()
