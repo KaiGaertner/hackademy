@@ -10,11 +10,6 @@ try:
 	print('Turn off')
 	GPIO.output(26, 1)         # set GPIO24 to 0/GPIO.LOW/False  
 	sleep(5)                 # wait half a second  
-#	print('Turn off')
-#	GPIO.output(26,1)
-#	sleep(0.2)
-#	GPIO.output(26,0)
-#	sleep(5)
 	print('Finish')
 	GPIO.cleanup()
 except KeyboardInterrupt:          # trap a CTRL+C keyboard interrupt  
