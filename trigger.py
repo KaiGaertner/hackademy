@@ -7,6 +7,7 @@ def take_picture(ID='test'):
 	camera.capture(pics_path+ID+".png")
 	if DARKMODE:
 			lightswitch(False)
+	camera.close()
 	print("Taken picture.")
 
 
@@ -102,13 +103,8 @@ def on_left_button_pressed():
 	mixer.music.rewind()
 	print('left button pressed')
 
-# play sound with pygame
-from pygame import mixer, time, error
 
-import RPi.GPIO as GPIO
-
-if __name__ == '__main__':
-	
+def readingbox():
 	ID = datetime.datetime.now().strftime("%Y%m%d_%H-%M-%S")
 
 	take_picture(ID)
@@ -124,7 +120,7 @@ if __name__ == '__main__':
 	INDEX = 0
 	try:
 		PAUSE = False
-		while INDEX <= len(sound_files):
+		while INDEX < len(sound_files):
 		#for idx, soundfile in enumerate(sound_files):
 			soundfile = sound_files[INDEX]
 			try:
@@ -154,6 +150,22 @@ if __name__ == '__main__':
 				time.delay(100)
 				
 	except KeyboardInterrupt:  
-			mixer.music.stop()
+		mixer.music.stop()
+	except IndexError:
+		print("Listenproblem")
 
+
+
+
+# play sound with pygame
+from pygame import mixer, time, error
+
+import RPi.GPIO as GPIO
+
+if __name__ == '__main__':
+	while True:
+		if GPIO.event_detected(MIDDLE):
+			readingbox()
+		time.delay(100)
 	GPIO.cleanup() 
+	
