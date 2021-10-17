@@ -1,0 +1,15 @@
+[Unit]
+Description=readingbox Service
+After=multi-user.target
+
+[Service]
+Type=idle
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/hackademy/trigger.py
+StandardOutput=/var/log1.log
+StandardError=/var/log2.log
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
